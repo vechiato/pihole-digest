@@ -72,19 +72,22 @@ pihole-digest --db /etc/pihole/pihole-FTL.db \
 
 ## Scheduled reports
 
-Daily cron dropping dated reports into a web root, SARG-style:
+Add to root's crontab with `sudo crontab -e`. Daily cron dropping dated reports into a web root, SARG-style:
 
 ```cron
-15 6 * * * root /usr/local/bin/pihole-digest --days 7 \
+15 6 * * * /usr/local/bin/pihole-digest --days 7 \
     --output /var/www/html/reports/digest-$(date +\%F).html
 ```
 
 Weekly rollup on Mondays:
 
 ```cron
-0 7 * * 1 root /usr/local/bin/pihole-digest --days 7 \
+0 7 * * 1 /usr/local/bin/pihole-digest --days 7 \
     --output /var/www/html/reports/weekly-$(date +\%F).html
 ```
+
+(Dropping these into `/etc/crontab` or `/etc/cron.d/` instead of a personal crontab? Those formats
+have a username field between the schedule and the command, e.g. `15 6 * * * root /usr/local/bin/...`.)
 
 If serving reports via Pi-hole's own lighttpd, drop them under `/var/www/html/` and they'll be reachable alongside the admin UI. Consider access controls: the reports expose per-client browsing patterns.
 
