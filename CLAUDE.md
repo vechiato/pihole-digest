@@ -6,8 +6,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `pihole-digest.py` is a single-file, stdlib-only Python script that reads Pi-hole's FTL long-term
 database (`pihole-FTL.db`, SQLite) directly and renders a self-contained SARG-style HTML report
-(one file, inline CSS, no JS, no external assets). There is no package, build step, or test suite —
-the entire project is the script plus `README.md` and `sample-report.html` (an example output).
+(one file, inline CSS, no JS, no external assets). There is no package or build step — the entire
+project is the script plus `README.md`, a `tests/` suite, and `docs/sample-report.html` (an example
+output, plus its screenshot `docs/sample-report.png` used in the README).
 
 ## Running it
 
@@ -20,14 +21,16 @@ the entire project is the script plus `README.md` and `sample-report.html` (an e
 
 Requires Python 3.8+ and read access to a real (or copied) `pihole-FTL.db`. There's no mock/fixture
 database in the repo — to test changes, run against a live Pi-hole's DB (opened `mode=ro`, safe to
-run against a live instance) or a copy of one. Regenerate `sample-report.html` by pointing `--output`
-at it after making rendering changes, so the example stays in sync.
+run against a live instance) or a copy of one. Regenerate `docs/sample-report.html` by pointing
+`--output` at it after making rendering changes, so the example stays in sync (and reshoot
+`docs/sample-report.png` if the layout changed visibly).
 
 Run tests with `python3 -m unittest discover -s tests` (stdlib `unittest`, no third-party test
 deps). Tests build an in-memory SQLite DB shaped like the FTL `queries`/`network_addresses` schema
-rather than depending on a real Pi-hole database. There is no linter or CI config; for anything the
-unit tests don't cover (e.g. visual CSS layout), verify by running against a real database and
-opening the resulting HTML.
+rather than depending on a real Pi-hole database. GitHub Actions (`.github/workflows/tests.yml`)
+runs the same suite on push/PR across Python 3.8-3.13. There is no linter; for anything the unit
+tests don't cover (e.g. visual CSS layout), verify by running against a real database and opening
+the resulting HTML.
 
 ## Architecture
 

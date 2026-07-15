@@ -4,4 +4,4 @@ __pycache__/
 .venv/
 .coverage
 *.html
-!sample-report.html
+!docs/sample-report.html

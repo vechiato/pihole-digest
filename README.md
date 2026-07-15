@@ -30,22 +30,32 @@ Client IPs are resolved to hostnames using FTL's own `network_addresses` table. 
 
 The database is opened read-only (`mode=ro`), so it is safe to run against a live FTL instance.
 
+## Install
+
+```bash
+curl -o /usr/local/bin/pihole-digest \
+    https://raw.githubusercontent.com/vechiato/pihole-digest/main/pihole-digest.py
+chmod +x /usr/local/bin/pihole-digest
+```
+
 ## Usage
 
 ```bash
 # Last 7 days (default), writes pihole-digest.html to the current directory
-./pihole-digest.py
+pihole-digest
 
 # Last 30 days
-./pihole-digest.py --days 30
+pihole-digest --days 30
 
 # Explicit date range (inclusive)
-./pihole-digest.py --from 2026-07-01 --to 2026-07-14
+pihole-digest --from 2026-07-01 --to 2026-07-14
 
 # Custom database path and output location
-./pihole-digest.py --db /etc/pihole/pihole-FTL.db \
+pihole-digest --db /etc/pihole/pihole-FTL.db \
     --output /var/www/html/pihole-digest.html
 ```
+
+(Running from a clone without installing: `./pihole-digest.py` in place of `pihole-digest`.)
 
 ### Options
 
@@ -65,14 +75,14 @@ The database is opened read-only (`mode=ro`), so it is safe to run against a liv
 Daily cron dropping dated reports into a web root, SARG-style:
 
 ```cron
-15 6 * * * root /usr/local/bin/pihole-digest.py --days 7 \
+15 6 * * * root /usr/local/bin/pihole-digest --days 7 \
     --output /var/www/html/reports/digest-$(date +\%F).html
 ```
 
 Weekly rollup on Mondays:
 
 ```cron
-0 7 * * 1 root /usr/local/bin/pihole-digest.py --days 7 \
+0 7 * * 1 root /usr/local/bin/pihole-digest --days 7 \
     --output /var/www/html/reports/weekly-$(date +\%F).html
 ```
 
@@ -101,5 +111,6 @@ to run `pihole-digest.py`.
 ## Files
 
 - `pihole-digest.py`: the generator
-- `sample-report.html`: example output from synthetic data
+- `docs/sample-report.html`: example output from synthetic data
 - `tests/`: unit tests
+- `CHANGELOG.md`: version history
