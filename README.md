@@ -1,5 +1,9 @@
 # pihole-digest
 
+[![tests](https://github.com/vechiato/pihole-digest/actions/workflows/tests.yml/badge.svg)](https://github.com/vechiato/pihole-digest/actions/workflows/tests.yml)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![python 3.8+](https://img.shields.io/badge/python-3.8%2B-blue.svg)](README.md#requirements)
+
 SARG-style HTML report generator for Pi-hole. Reads the FTL long-term database (`/etc/pihole/pihole-FTL.db`) directly and produces a single self-contained HTML report, no external dependencies.
 
 If you've used SARG with Squid/SquidGuard, this is the closest DNS-level equivalent: per-client activity, top permitted and blocked domains, and blocked-status breakdowns over an arbitrary date range.
