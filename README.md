@@ -17,6 +17,8 @@ A single HTML file containing:
 
 Client IPs are resolved to hostnames using FTL's own `network_addresses` table. The `--resolve` flag adds a reverse-DNS fallback for anything FTL has no name for.
 
+![Sample report](docs/sample-report.png)
+
 ## Requirements
 
 - Python 3.8+ (stdlib only, uses `sqlite3`)
