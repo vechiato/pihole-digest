@@ -88,6 +88,21 @@ Weekly rollup on Mondays:
 
 If serving reports via Pi-hole's own lighttpd, drop them under `/var/www/html/` and they'll be reachable alongside the admin UI. Consider access controls: the reports expose per-client browsing patterns.
 
+### Optional: Pi-hole running in Docker
+
+If Pi-hole runs in a container (e.g. the official `pihole/pihole` image) with a bind-mounted
+`/etc/pihole`, the FTL database lives on the **host**, at the mounted path — run `pihole-digest`
+directly on the host, no need to exec into the container:
+
+```bash
+# given a compose volume like `./etc-pihole:/etc/pihole`
+pihole-digest --db /docker/pi-hole/etc-pihole/pihole-FTL.db --output digest.html
+```
+
+Cron on the host works the same way; just point `--db` at that path. The user running the cron
+job needs read access to the file — running as root (as in the examples above) is the simplest
+fix if the container left it with restrictive permissions.
+
 ## Notes and limitations
 
 - **DNS-level visibility only.** Pi-hole sees DNS queries, not traffic. There is no bandwidth, URL path, or authenticated-user data as with SARG/Squid. Reports are keyed on client IP/hostname and domain.
